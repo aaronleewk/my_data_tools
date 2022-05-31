@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "data_tools"
+version = "0"
+description = "Tools for data extraction and cleaning"
+authors = ["Aaron Lee <84013634+aaronleewk@users.noreply.github.com>"]
+packages = [
+    { include = "tools", from "src" },
+]
+
+
+[tool.poetry.dependencies]
+python = "^3.8"
+pandas = "^1.4.2"
+numpy = "^1.22.4"
+psycopg2 = "^2.9.3"
+SQLAlchemy = "^1.4.36"
+configparser = "^5.2.0"
+
+[tool.poetry.dev-dependencies]
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
