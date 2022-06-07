@@ -68,7 +68,11 @@ class transformation:
 
     def replace_value(self, col_name, value_org, value_new):
         return
-
+    
+    # Only select rows where column 'x' contains specific value(s), where values is in an array []
+    def select_rows_with_values(self,values,col_name)
+        return self.df[self.df[col_name].isin(values)]
+                       
 
 class data_io:
 
@@ -203,3 +207,17 @@ class dataset_insights:
         new_list = list(csv.reader([string],delimiter=','))[0]
 
         return new_list
+    
+ 
+
+
+'''
+
+# Data analysis idea:
+# Once cleaned dataset has been obtained, can figure out why some data was missing
+# For example, 'email' was present in dataset 1, but not dataset 2 and dataset 3. Why was it missing?
+
+e.g. find the date those emails appeared in dataset 1. They could have been collected AFTER the process for dataset 2 and 3 were created.
+
+
+'''
