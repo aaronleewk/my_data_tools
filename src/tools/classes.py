@@ -208,6 +208,26 @@ class dataset_insights:
 
         return new_list
     
+    '''
+    I found the Pandas 'duplicated' API quite confusing. 
+    Colloquially, I interpret 'duplicated' as meaning 'show me which values are duplicated'.
+    I therefore expect to see the values which appear multiple times in the dataset.
+    That list of values should be unique. So:
+        [1,1,1,2,2,3,3,3,3,3,4] => [1,2,3]
+    The equivalent code in Python is 
+        set(list of duplicated values only)
+
+    But the 'duplicated' API does the opposite.
+    It marks ALL duplicates. So:
+        [1,1,1] => [True, True, True]       (using the 'False' argument for the 'keep' parameter)
+    The understanding is 'show me all duplicated values'.
+    
+    This understanding does not fit in with other Pandas APIs such as 'drop_duplicates'
+    which discards all values except one from each set of duplicates.
+    '''
+    
+    def only_unique_values(self,col_name):
+        return self.df[~self.df.duplicated(subset=[col_name])]
  
 
 
