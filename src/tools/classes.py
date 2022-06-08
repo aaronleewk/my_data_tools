@@ -29,7 +29,17 @@ class transformation:
                 self.df.rename(columns={old_name: new_name}, inplace=True)
 
         return self.df
+    
     # This is to enable matching of columns where one is in a different case
+    # NOTE sometimes while the values in normal case are different, when converted to lowercase they become the same:
+    #   Mike Morrison => mike morrison
+    #   Mike morrison => mike morrison
+    # So make sure you know what data you want to use for your joins.
+    # e.g.
+    #   df_new.drop_duplicates(subset=['column_values_in_lower_case'], inplace=True)
+    #       vs
+    #   df_new.drop_duplicates(subset=['Column_Values_in_Normal_Case'], inplace=True)
+    # could be different, even if 'column_values_in_lower_case' was derived from 'Column_Values_in_Normal_Case' in the first place
     def column_to_lower(self):
         new_col = self.df['col'].str.lower()
 
