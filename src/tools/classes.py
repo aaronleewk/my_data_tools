@@ -42,7 +42,31 @@ class transformation:
     # could be different, even if 'column_values_in_lower_case' was derived from 'Column_Values_in_Normal_Case' in the first place
     def column_to_lower(self):
         new_col = self.df['col'].str.lower()
+        
+    # Also when standardising values, be aware of non-character strings, e.g. "'", " ", "." etc
+    # Example: "Michael Chan . "
+    def remove_non_characters(self):
+        #regex method
+        
+    # Removes erroneous values
+    def remove_errors(self, df, col_name, list_of_errors):
+        raw_list = df[col_name].to_frame()
 
+        def is_error(df):
+
+            string = df.values[0]
+            if string not in list_of_errors:
+                return True
+            else:
+                return False
+
+        error_status = raw_list.apply(is_error, axis=1)
+
+        cleaned_series = error_status[error_status == True]
+
+        return cleaned_series
+    
+    
     # Merges two dataframes into one
     def merge_df(self, df2, leftCol, rightCol, howMerge, merge_indicator=1, df1=0):
 
@@ -74,7 +98,6 @@ class transformation:
     def group_data(self, df, criteria):
         # this assumes the grouping criteria is only one dimensional
         return df.groupby([criteria])
-
 
     def replace_value(self, col_name, value_org, value_new):
         return
@@ -186,22 +209,6 @@ class dataset_insights:
         raw_list = df[col_name].to_list()
         return set(raw_list)
 
-    def remove_errors(self, df, col_name, list_of_errors):
-        raw_list = df[col_name].to_frame()
-
-        def is_error(df):
-
-            string = df.values[0]
-            if string not in list_of_errors:
-                return True
-            else:
-                return False
-
-        error_status = raw_list.apply(is_error, axis=1)
-
-        cleaned_series = error_status[error_status == True]
-
-        return cleaned_series
 
     # For string-formatted json, e.g. "{'name':'Laura', 'surname':'Smith'}" -> {'name':'Laura', 'surname':'Smith'}
     def parseJSON(string):
